@@ -2,8 +2,7 @@ class ForecastSerializer
   include JSONAPI::Serializer
 
   def self.format(data)
-    # require 'pry'; binding.pry
-    test = {
+    {
       "data": {
         "id": nil,
         "type": "forecast",
