@@ -15,7 +15,7 @@ RSpec.describe ForecastFacade do
       expect(data[:current]).to have_key(:humidity)
       expect(data[:current]).to have_key(:uvi)
       expect(data[:current]).to have_key(:visibility)
-      expect(data[:current][:weather][0]).to have_key(:description)
+      expect(data[:current][:weather][0]).to have_key(:main)
       expect(data[:current][:weather][0]).to have_key(:icon)
 
 
