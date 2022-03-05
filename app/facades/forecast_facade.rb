@@ -5,4 +5,8 @@ class ForecastFacade
     longitude = data[:results][0][:locations][0][:latLng][:lng]
     forecast_data = ForecastService.get_forecast(latitude, longitude)
   end
+
+  # def self.route_data(location)
+  #
+  # end
 end
