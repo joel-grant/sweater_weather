@@ -8,8 +8,18 @@ RSpec.describe 'Road Trip API Endpoint' do
       last_user = User.last
       trip_params = { origin: "Denver,CO", destination: "Pueblo,CO", api_key: last_user.auth_token }
       post '/api/v1/road_trip', params: trip_params
+      result = JSON.parse(response.body, symbolize_names: true)
 
-      require 'pry'; binding.pry
+      expect(result).to have_key(:data)
+      expect(result[:data]).to have_key(:id)
+      expect(result[:data]).to have_key(:type)
+      expect(result[:data]).to have_key(:attributes)
+      expect(result[:data][:attributes]).to have_key(:start_city)
+      expect(result[:data][:attributes]).to have_key(:end_city)
+      expect(result[:data][:attributes]).to have_key(:travel_time)
+      expect(result[:data][:attributes]).to have_key(:weather_at_eta)
+      expect(result[:data][:attributes][:weather_at_eta]).to have_key(:temperature)
+      expect(result[:data][:attributes][:weather_at_eta]).to have_key(:conditions)
     end
   end
 end
