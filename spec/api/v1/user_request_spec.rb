@@ -34,7 +34,8 @@ RSpec.describe 'User API Endpoint' do
       post '/api/v1/users', params: user_params
 
       # Sad path => log in with the wrong password
-      post '/api/v1/sessions', params: { email: 'joe@shmo.com', password: '123333'}
+      incorrect_login_data = { email: 'joe@shmo.com', password: '123333'}
+      post '/api/v1/sessions', params: incorrect_login_data
 
       result = JSON.parse(response.body, symbolize_names: true)
 
