@@ -9,5 +9,14 @@ RSpec.describe MapFacade do
 
       expect(data).to be_a Hash
     end
+
+    it 'can inform the user when a route is impossible' do
+      start = "Denver, Co"
+      stop = "Honolulu, HI"
+      data = MapFacade.directions(start, stop)
+
+      expect(data[:info][:statuscode]).to eq(402)
+      expect(data[:info][:messages]).to eq(["We are unable to route with the given locations."])
+    end
   end
 end
