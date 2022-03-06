@@ -25,8 +25,21 @@ RSpec.describe 'User API Endpoint' do
       # Tries to recreate the same user
       post '/api/v1/users', params: user_params
       result = JSON.parse(response.body, symbolize_names: true)
-      # expect(User.all.count).to eq(1)
+
       expect(result[:error]).to eq("This email already exists!")
+    end
+
+    it 'returns an error when a password is wrong' do
+      user_params = { email: 'joe@shmo.com', password: '12345', password_confirmation: '12345'}
+      post '/api/v1/users', params: user_params
+
+      # Sad path => log in with the wrong password
+      post '/api/v1/sessions', params: { email: 'joe@shmo.com', password: '123333'}
+
+      result = JSON.parse(response.body, symbolize_names: true)
+
+      expect(result).to have_key(:error)
+      expect(result[:error]).to eq("Your credentials are incorrect!")
     end
   end
 end
