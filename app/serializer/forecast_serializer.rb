@@ -8,9 +8,9 @@ class ForecastSerializer
         "type": "forecast",
         "attributes": {
           "current_weather": {
-            "datetime": Time.at(data[:current][:dt]),
-            "sunrise": Time.at(data[:current][:sunrise]),
-            "sunset": Time.at(data[:current][:sunset]),
+            "datetime": Time.at(data[:current][:dt]).strftime('%a, %d %b %Y %H:%M:%S'),
+            "sunrise": Time.at(data[:current][:sunrise]).strftime('%a, %d %b %Y %H:%M:%S'),
+            "sunset": Time.at(data[:current][:sunset]).strftime('%a, %d %b %Y %H:%M:%S'),
             "temperature": data[:current][:temp],
             "feels_like": data[:current][:feels_like],
             "humidity": data[:current][:humidity],
@@ -30,8 +30,8 @@ class ForecastSerializer
     data[:daily].slice(0, 5).map do |daily_weather|
       {
         "date": Time.at(daily_weather[:dt]).to_date,
-        "sunrise": Time.at(daily_weather[:dt]),
-        "sunset": Time.at(daily_weather[:dt]),
+        "sunrise": Time.at(daily_weather[:sunrise]).strftime('%a, %d %b %Y %H:%M:%S'),
+        "sunset": Time.at(daily_weather[:sunset]).strftime('%a, %d %b %Y %H:%M:%S'),
         "max_temp": daily_weather[:temp][:max],
         "min_temp": daily_weather[:temp][:min],
         "conditions": daily_weather[:weather][0][:main],
