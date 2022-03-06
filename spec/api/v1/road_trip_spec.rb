@@ -36,5 +36,13 @@ RSpec.describe 'Road Trip API Endpoint' do
       expect(result[:data][:attributes][:weather_at_eta][:temperature]).to be nil
       expect(result[:data][:attributes][:weather_at_eta][:conditions]).to be nil
     end
+
+    it 'will return an error if the api key authorization fails' do
+      trip_params = { origin: "Denver,CO", destination: "Pueblo,CO", api_key: "total-nonsense-token" }
+      post '/api/v1/road_trip', params: trip_params
+      result = JSON.parse(response.body, symbolize_names: true)
+
+      expect(result[:error]).to eq("Invalid Authorization")
+    end
   end
 end
