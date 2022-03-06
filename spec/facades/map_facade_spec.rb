@@ -6,8 +6,11 @@ RSpec.describe MapFacade do
       start = "Denver, Co"
       stop = "Pueblo, Co"
       data = MapFacade.directions(start, stop)
-
+  
       expect(data).to be_a Hash
+      expect(data[:route]).to have_key(:formattedTime)
+      expect(data[:route]).to have_key(:realTime)
+      expect(data[:route]).to have_key(:legs)
     end
 
     it 'can inform the user when a route is impossible' do
@@ -19,7 +22,7 @@ RSpec.describe MapFacade do
       expect(data[:info][:messages]).to eq(["We are unable to route with the given locations."])
       expect(data[:route]).to have_key(:routeError)
 
-      expect(data[:route]).to_not have_key(:time)      
+      expect(data[:route]).to_not have_key(:time)
     end
   end
 end
