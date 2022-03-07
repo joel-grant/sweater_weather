@@ -7,7 +7,7 @@ RSpec.describe 'Book-Search API Endpoint' do
       quantity = 5
       get "/api/v1/book-search?location=#{location}&quantity=#{quantity}"
       results = JSON.parse(response.body, symbolize_names: true)
-require 'pry'; binding.pry
+# require 'pry'; binding.pry
       expect(results).to have_key(:data)
       expect(results).to be_a Hash
       expect(results[:data]).to be_a Hash
@@ -36,12 +36,6 @@ require 'pry'; binding.pry
         expect(book).to have_key(:publisher)
         expect(book[:publisher]).to be_an Array
       end
-
-
-
-
-
-      require 'pry'; binding.pry
     end
   end
 end
