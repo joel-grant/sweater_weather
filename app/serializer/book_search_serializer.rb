@@ -15,10 +15,18 @@ class BookSearchSerializer
             {
               "isbn": book[:isbn] ||= [],
               "title": book[:title],
-              "publisher": book[:publisher]
+              "publisher": book[:publisher] ||= []
             }
           end
         }
+      }
+    }
+  end
+
+  def self.error(error_message)
+    {
+      "data": {
+        "error": error_message
       }
     }
   end
