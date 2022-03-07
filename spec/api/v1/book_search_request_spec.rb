@@ -40,7 +40,7 @@ RSpec.describe 'Book-Search API Endpoint' do
 
     it 'works with different search and quantity criteria' do
       location = "San Francisco"
-      quantity = 1
+      quantity = 11
       get "/api/v1/book-search?location=#{location}&quantity=#{quantity}"
       results = JSON.parse(response.body, symbolize_names: true)
 
@@ -72,6 +72,16 @@ RSpec.describe 'Book-Search API Endpoint' do
         expect(book).to have_key(:publisher)
         expect(book[:publisher]).to be_an Array
       end
+    end
+
+    it 'returns an error if the user tries to enter 0 or a negative number' do
+      location = "Denver"
+      quantity = 0
+      get "/api/v1/book-search?location=#{location}&quantity=#{quantity}"
+      results = JSON.parse(response.body, symbolize_names: true)
+
+      expect(results).to be_a Hash
+      expect(results[:data][:error]).to eq("Book quantity of #{quantity} not allowed.  Must enter a positive number")
     end
   end
 end
