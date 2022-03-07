@@ -15,8 +15,9 @@ RSpec.describe BookSearchService do
       data[:docs].each do |book|
         expect(book).to have_key(:title)
         expect(book[:title]).to be_a String
-        # require 'pry'; binding.pry
+
         # Some lesser-known books also dont have a publisher field
+        
         # expect(book).to have_key(:publisher)
         # expect(book[:publisher]).to be_an Array
 
