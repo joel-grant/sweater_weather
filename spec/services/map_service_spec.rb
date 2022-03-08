@@ -14,6 +14,29 @@ RSpec.describe MapService do
 
       expect(coordinate_data[:results][0][:providedLocation]).to have_key(:location)
       expect(coordinate_data[:results][0][:providedLocation][:location]).to eq(location)
+
+    end
+  end
+
+  describe '::get_route' do
+    it 'returns the route based on a start and stop location' do
+      start = "Denver,CO"
+      stop = "Pueblo,CO"
+      route_data = MapService.get_route(start, stop)
+      expect(route_data).to be_a Hash
+      expect(route_data[:route]).to have_key(:formattedTime)
+      expect(route_data[:route]).to have_key(:realTime)
+      expect(route_data[:info][:statuscode]).to_not eq(402)
+      # require 'pry'; binding.pry
+      # expect(route_data[:route]).to_not have_key(:routeError)
+    end
+
+    it 'indicates when a path isnt possible' do
+      start = "Denver,CO"
+      stop = "Honolulu,HI"
+      impossible_route = MapService.get_route(start, stop)
+
+      expect(impossible_route[:info][:statuscode]).to eq(402)
     end
   end
 end
