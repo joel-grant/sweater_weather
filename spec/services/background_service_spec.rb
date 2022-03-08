@@ -7,9 +7,9 @@ RSpec.describe BackgroundService do
 
       expect(data).to have_key(:photos)
       expect(data[:photos]).to be_an Array
-
-      expect(data[:photos]).to have_key(:url)
-      expect(data[:photos]).to have_key(:photographer)
+      # require 'pry'; binding.pry
+      expect(data[:photos][0]).to have_key(:url)
+      expect(data[:photos][0]).to have_key(:photographer)
     end
   end
 end
