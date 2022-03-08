@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe 'User API Endpoint' do
   describe 'POST /users' do
     it 'creates a new user in the database' do
-      # expect(User.all.count).to eq(0)
       user_params = { email: 'joe@shmo.com', password: '12345', password_confirmation: '12345'}
       post '/api/v1/users', params: user_params
 
@@ -38,18 +37,12 @@ RSpec.describe 'User API Endpoint' do
       expect(result[:error]).to eq("Your passwords must match!")
     end
 
-    # it 'returns an error when a password is wrong' do
-    #   user_params = { email: 'joe@shmo.com', password: '12345', password_confirmation: '12345'}
-    #   post '/api/v1/users', params: user_params
-    #
-    #   # Sad path => log in with the wrong password
-    #   incorrect_login_data = { email: 'joe@shmo.com', password: '123333'}
-    #   post '/api/v1/sessions', params: incorrect_login_data
-    #
-    #   result = JSON.parse(response.body, symbolize_names: true)
-    #
-    #   expect(result).to have_key(:error)
-    #   expect(result[:error]).to eq("Your credentials are incorrect!")
-    # end
+    it 'doesnt allow anything other than an email address for a new user' do
+      user_params = { email: 'joe.com', password: '12345', password_confirmation: '12345'}
+      post '/api/v1/users', params: user_params
+      result = JSON.parse(response.body, symbolize_names: true)
+
+      expect(result[:error]).to eq("#{user_params[:email]} is not a valid email address!!")
+    end
   end
 end
