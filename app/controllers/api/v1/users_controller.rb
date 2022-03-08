@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
       session[:user_id] = user.id
       render json: UsersSerializer.send_token(user), status: 201
     elsif User.find_by(email: params[:email])
-      render json: UsersSerializer.error("This email already exists!"), status: 400
+      render json: UsersSerializer.error("This email already exists!"), status: 403
     elsif params[:password] != params[:password_confirmation]
       render json: UsersSerializer.error("Your passwords must match!"), status: 400
     end

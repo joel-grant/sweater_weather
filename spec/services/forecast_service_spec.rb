@@ -1,12 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe ForecastFacade do
-  describe '::all_weather' do
-    it 'returns all the weather from the one call api endpoint' do
-      data = ForecastFacade.all_weather("denver,co")
+RSpec.describe ForecastService do
+  describe '::get_forecast' do
+    it 'returns the forecast data for a given location' do
+      data = ForecastService.get_forecast(39.7392, -104.9903)
 
-      expect(data[:lat]).to eq(39.7385)
-      expect(data[:lon]).to eq(-104.9849)
+      expect(data).to be_a Hash
+
+      expect(data).to have_key(:lat)
+      expect(data).to have_key(:lon)
+      expect(data[:lat]).to be_a Float
+      expect(data[:lon]).to be_a Float
+
+      expect(data).to have_key(:current)
       expect(data[:current]).to have_key(:dt)
       expect(data[:current]).to have_key(:sunrise)
       expect(data[:current]).to have_key(:sunset)
