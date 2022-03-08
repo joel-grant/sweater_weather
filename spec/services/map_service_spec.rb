@@ -23,12 +23,11 @@ RSpec.describe MapService do
       start = "Denver,CO"
       stop = "Pueblo,CO"
       route_data = MapService.get_route(start, stop)
+      
       expect(route_data).to be_a Hash
       expect(route_data[:route]).to have_key(:formattedTime)
       expect(route_data[:route]).to have_key(:realTime)
       expect(route_data[:info][:statuscode]).to_not eq(402)
-      # require 'pry'; binding.pry
-      # expect(route_data[:route]).to_not have_key(:routeError)
     end
 
     it 'indicates when a path isnt possible' do
