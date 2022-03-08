@@ -8,6 +8,8 @@ class Api::V1::UsersController < ApplicationController
       render json: UsersSerializer.error("This email already exists!"), status: 403
     elsif params[:password] != params[:password_confirmation]
       render json: UsersSerializer.error("Your passwords must match!"), status: 400
+    elsif user.errors.messages[:email]
+      render json: UsersSerializer.error("#{params[:email]} is not a valid email address!!")
     end
   end
 
