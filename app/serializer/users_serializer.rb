@@ -1,5 +1,4 @@
 class UsersSerializer
-  include JSONAPI::Serializer
 
   def self.send_token(user)
     {
